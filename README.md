@@ -9,6 +9,8 @@
 [![Percentage of Issues Still Open][average-time-to-resolve-an-issue-image]][average-time-to-resolve-an-issue-url]
 [![Twitter Follow][twitter-follow-image]][twitter-follow-url]
 
+* source: https://github.com/apache/rocketmq
+
 **[Apache RocketMQ](https://rocketmq.apache.org) is a distributed messaging and streaming platform with low latency, high performance and reliability, trillion-level capacity and flexible scalability.**
 
 
