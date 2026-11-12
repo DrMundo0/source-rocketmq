@@ -68,18 +68,27 @@ public class TopicPublishInfo {
 
     public MessageQueue selectOneMessageQueue(final String lastBrokerName) {
         if (lastBrokerName == null) {
+            // 第一步，如果没有上次使用的Broker作为参考，那么随机选择一个Broker
             return selectOneMessageQueue();
         } else {
+            // 第二步，如果存在上次使用的Broker，就选择非上次使用的Broker，目的是均匀的分散Broker的压力
             int index = this.sendWhichQueue.getAndIncrement();
+
             for (int i = 0; i < this.messageQueueList.size(); i++) {
                 int pos = Math.abs(index++) % this.messageQueueList.size();
-                if (pos < 0)
+
+                if (pos < 0) {
                     pos = 0;
+                }
+
                 MessageQueue mq = this.messageQueueList.get(pos);
+
                 if (!mq.getBrokerName().equals(lastBrokerName)) {
                     return mq;
                 }
             }
+
+            // 第三步，如果第一、二步都没有选中一个Broker，则采用兜底方案，随机选择一个Broker
             return selectOneMessageQueue();
         }
     }
